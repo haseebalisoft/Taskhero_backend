@@ -1,7 +1,7 @@
-// models/Profile.js
+// models/Hero.js
 import mongoose from "mongoose";
 
-const profileSchema = new mongoose.Schema(
+const heroSchema = new mongoose.Schema(
   {
     profile_picture: {
       type: String,
@@ -17,12 +17,12 @@ const profileSchema = new mongoose.Schema(
       required: false,
     },
     languages: {
-      type: String, // single value, or change to [String] if multiple
+      type: String, // change to [String] if multiple
       required: false,
     },
     servicetype: {
       type: String,
-      enum: ["gig", "service", "other"], // limit options if needed
+      enum: ["gig", "service", "other"],
       required: true,
     },
     contactNumber: {
@@ -42,14 +42,18 @@ const profileSchema = new mongoose.Schema(
     },
     paymentMethods: {
       type: [String],
-      enum: ["Easypaisa", "JazzCash", "Bank Transfer", "Cash", "Paypal"], // can extend list
+      enum: ["Easypaisa", "JazzCash", "Bank Transfer", "Cash", "Paypal"],
       required: true,
+    },
+    rating: {
+      type: Number,
+      default: 0, // ⭐ needed because you update rating later in controller
     },
   },
   { timestamps: true }
 );
 
-profileSchema.index({ location: "2dsphere" }); // For geo queries
+heroSchema.index({ location: "2dsphere" });
 
-const Profile = mongoose.model("Profile", profileSchema);
-export default Profile;
+const Hero = mongoose.model("Hero", heroSchema);
+export default Hero;
